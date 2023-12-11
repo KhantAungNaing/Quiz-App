@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -24,17 +25,17 @@ public class QuestionController {
 	QuestionService questionService;
 	
 	@GetMapping("allQuestions")
-	public List<Question> getAllQuestions() {
+	public ResponseEntity<List<Question>> getAllQuestions() {
 		return questionService.getAllQuestions();
 	}
 	
 	@GetMapping("category/{category}")
-	public List<Question> getQuestionsByCategory(@PathVariable String category) {
+	public ResponseEntity<List<Question>> getQuestionsByCategory(@PathVariable String category) {
 		return questionService.getQuestionsByCategory(category);
 	}
 	
 	@PostMapping("add")
-	public Question addQuestion(@RequestBody Question question) {
+	public ResponseEntity<Question> addQuestion(@RequestBody Question question) {
 		return questionService.addQuestion(question);
 	}
 	
