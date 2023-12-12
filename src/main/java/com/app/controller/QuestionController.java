@@ -1,7 +1,6 @@
 package com.app.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -40,12 +39,12 @@ public class QuestionController {
 	}
 	
 	@PatchMapping("update")
-	public Question updateQuestion(@RequestBody Question question) {
+	public ResponseEntity<Question> updateQuestion(@RequestBody Question question) {
 		return questionService.updateQuestion(question);
 	}
 	
 	@DeleteMapping("delete/{id}")
-	public Optional<Question> deleteQuestion(@PathVariable Integer id) {
+	public ResponseEntity<String> deleteQuestion(@PathVariable Integer id) {
 		return questionService.deleteQuestion(id);
 	}
 

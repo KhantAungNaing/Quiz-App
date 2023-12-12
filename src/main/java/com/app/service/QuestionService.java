@@ -2,7 +2,6 @@ package com.app.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,17 +38,31 @@ public class QuestionService {
 	}
 
 	public ResponseEntity<Question> addQuestion(Question question) {
-		return new ResponseEntity<>(questionDao.save(question),HttpStatus.CREATED);
+		try {
+			return new ResponseEntity<>(questionDao.save(question), HttpStatus.CREATED);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<>(new Question(), HttpStatus.BAD_REQUEST);
 	}
 
-	public Question updateQuestion(Question question) {
-		return questionDao.save(question);
+	public ResponseEntity<Question> updateQuestion(Question question) {
+		try {
+			return new ResponseEntity<>(questionDao.save(question), HttpStatus.CREATED);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<>(new Question(), HttpStatus.BAD_REQUEST);
 	}
 
-	public Optional<Question> deleteQuestion(Integer id) {
-		Optional<Question> ques = questionDao.findById(id);
-		questionDao.deleteById(id);
-		return ques;
+	public ResponseEntity<String> deleteQuestion(Integer id) {
+		try {
+			questionDao.deleteById(id);
+			return new ResponseEntity<>("Deleted Successfully", HttpStatus.NO_CONTENT);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ResponseEntity<>("Error during delete.", HttpStatus.BAD_REQUEST);
 	}
 
 }
